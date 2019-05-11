@@ -7,6 +7,9 @@ html {
 *::after {
     box-sizing: inherit;
 }
+#timer {
+    font-size: 2em;
+}
 
 html,
 body {
@@ -200,4 +203,24 @@ h1 {
     background-color: #9759E3;
     cursor: pointer;
 }
+.restart {
+    cursor: pointer;
+}
 
+@media screen and (max-width:700px){
+/*
+    .container {
+        width: 100%;
+    }
+
+    .deck {
+        width: 90%;
+    }
+*/
+
+    .card {
+        width: 80px;
+        height: 80px;
+		margin: 10;
+    }
+}

@@ -13,7 +13,21 @@
 
 //variables
 const deck = document.querySelector(".deck");
-deck.addEventListener('click', openCard);
+const restartButton = document.querySelector('.restart');
+const modal = document.querySelector('#simpleModal');
+const modalCloseButton = document.querySelector('.modal-close-button');
+const modalReplayButton = document.querySelector('.modal-replay-button');
+const modalMoves = document.querySelector('.modal-body .moves-count');
+const modalHours = document.querySelector('.modal-body .hours');
+const modalMins = document.querySelector('.modal-body .mins');
+const modalSeconds = document.querySelector('.modal-body .seconds');
+const modalRating = document.querySelector('.modal-body .rating');
+const stars = document.querySelectorAll('.fa-star');
+const timerHours = document.querySelector('#timer .hours');
+const timerMins = document.querySelector('#timer .minutes');
+const timerSeconds = document.querySelector('#timer .seconds');
+
+
 const movesCount = document.querySelector('.moves');
 let cardSymbols = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb', 'diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
 let cards = [].slice.call(deck.children);
@@ -21,9 +35,22 @@ let openedCards = [];
 
 let timer = 0;
 let elapsedSec = 0;
+let hour = 0;
+let min = 0;
+let sec = 0;
+
+
 let gameInProgress = false;
 let moves = 0
-let matches = 8;
+let matches = 0;
+let starCount = 3;
+
+//event listeners
+deck.addEventListener('click', openCard);
+restartButton.addEventListener('click', newGame);
+modalCloseButton.addEventListener('click', closeModal);
+modalReplayButton.addEventListener('click', newGame);
+
 
 //run
 newGame();
@@ -32,8 +59,12 @@ newGame();
 
 function newGame() {
 
-    // Clear openedCards array
+    
+	closeModal();
+	// Clear openedCards array
     openedCards = [];
+	
+	resetScore();
 
     // Shuffle symbols
     cardSymbols = shuffle(cardSymbols);
@@ -43,15 +74,14 @@ function newGame() {
         // Remove classes
         card.classList.remove('open', 'show', 'match', 'bounceIn');
         // Remove symbols
-        removeClassByPrefix(card.children[0], 'fa-');  //need to rework this
+        removeClassByPrefix(card.children[0], 'fa-'); 
 
         // Attach new symbols to cards
         const symbol = `fa-${cardSymbols[index]}`;
         card.children[0].classList.add(symbol);
     });
 	elapsedSec = 0;
-//	openAllCards();
-	
+
 	// Reset moves
     moves = 0;
     movesCount.textContent = moves;
@@ -96,19 +126,19 @@ function checkMatch() {
     }
 }
 
-
-
-function openAllCards() {
-	cards.forEach((card, index) => {
-        card.classList.add('show');
-		console.log('card openend' + index);
-	});
-}
-
 function incrementMove() {
     moves++;
     movesCount.textContent = moves;
-    //determineRating();
+	if (moves === 15) {
+        stars[2].style.display = "none";
+		starCount = 2; 
+    } else if (moves === 27) {
+        stars[1].style.display = "none";
+		starCount = 1; 
+    } else if (moves === 35) {
+        stars[0].style.display = "none";
+		starCount = 0; 
+    }
 }
 
 function cardsMatched(card) {
@@ -133,22 +163,26 @@ function checkIfWon() {
 function resetScore() {
 
     // Reset rating
-//    rating = 3;
 //    stars.forEach(star => removeClassByPrefix(star, 'empty-star'));
-
-
 
     // Reset matches
     matches = 0;
 
     // Reset time
     elapsedSec = 0;
-//    timerHours.textContent = '00';
-//    timerMins.textContent = '00';
-//    timerSeconds.textContent = '00';
+    timerHours.textContent = '00';
+    timerMins.textContent = '00';
+    timerSeconds.textContent = '00';
 
     // Stop timer
     stopTimer();
+	
+	starCount = 3;
+	
+	//display all stars
+	stars.forEach (function (element) {
+		element.style.display = "inline";
+	});
 }
 
 function startTimer() {
@@ -165,13 +199,27 @@ function stopTimer() {
 
 function setTime() {
     let remainingSec = ++elapsedSec;
-//    hour = parseInt(remainderSeconds / 3600);
-//    timerHours.textContent = stringifyTime(hour);
-//    remainderSeconds = remainderSeconds % 3600;
-//    min = parseInt(remainderSeconds / 60)
-//    timerMins.textContent = stringifyTime(min);
-//    remainderSeconds = remaind
-    //timerSeconds.textContent = remainingSec;
+    hour = parseInt(remainingSec / 3600);
+    timerHours.textContent = stringifyTime(hour);
+    remainingSec = remainingSec % 3600;
+    min = parseInt(remainingSec / 60);
+    timerMins.textContent = stringifyTime(min);
+	remainingSec = remainingSec % 60;
+    sec = remainingSec;
+    timerSeconds.textContent = stringifyTime(sec);
+}
+
+function openModal() {
+    modalHours.textContent = hour > 0 ? `${hour} hours, ` : '';
+    modalMins.textContent = min > 0 ? `${min} minutes, ` : '';
+    modalSeconds.textContent = `${sec} seconds`;
+    modalMoves.textContent = `${moves} moves`;
+	modalRating.textContent = starCount;
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    modal.style.display = 'none';
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -195,14 +243,7 @@ function removeClassByPrefix(el, prefix, replace = '') {
     return el;
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+function stringifyTime(val) {
+    var valString = val + '';
+    return valString.length >= 2 ? `${val}` : `0${val}`;
+}
