@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Overview](#Overview)
-* [Game Behavior](#Game Behaviour)
+* [Game Behavior](#Game-Behaviour)
 
 
 ## Overview
