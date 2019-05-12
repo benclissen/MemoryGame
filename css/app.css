@@ -66,12 +66,37 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+	 -webkit-transition:
+    font-size 0.3s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+    background 0.5s,
+    -webkit-transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    -moz-transition:
+    font-size 0.3s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+    background 0.5s,
+    -moz-transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    -o-transition:
+    font-size 0.3s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+    transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background 0.5s;
+
+    transition:
+    font-size 0.3s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+    transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background 0.5s,
+    -webkit-transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .deck .card.open {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
+	-webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 .deck .card.show {
@@ -82,6 +107,21 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+}
+
+.card .bounceIn {
+    -webkit-animation-name: BounceIn;
+    -moz-animation-name: BounceIn;
+    -o-animation-name: BounceIn;
+    animation-name: BounceIn;
+    -webkit-animation-duration: .75s;
+    -moz-animation-duration: .75s;
+    -o-animation-duration: .75s;
+    animation-duration: .75s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
 }
 
 /*
@@ -112,97 +152,9 @@ h1 {
 }
 
 /* Style for the Winning Message*/
+/*To do*/
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index:1;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-	background-color: rgba(0,0,0,0.5);
-}
 
-.modal-content {
-    width: 60%;
-    margin: 20% auto;
-    border-radius: 8px;
-    background-color:#f4f4f4;
-    -webkit-box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
-    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
-    -webkit-animation-name: ModalOpen;
-    -moz-animation-name: ModalOpen;
-    -o-animation-name: ModalOpen;
-    animation-name: ModalOpen;
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
-    -o-animation-duration: 1s;
-    animation-duration: 1s;
-}
-
-.modal-header {
-    background: -webkit-linear-gradient(290deg, #02ccba 0%, #aa7ecd 100%);
-    background: -o-linear-gradient(290deg, #02ccba 0%, #aa7ecd 100%);
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding:15px;
-    color:#fff;
-}
-
-.modal-header h2 {
-    text-align: center;
-    margin:0;
-}
-
-.modal-close-btn {
-    float: right;
-    font-size: 1.5em;
-    color:#fff;
-}
-
-.modal-close-btn:hover, .modal-close-btn:focus {
-    color:#000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-body {
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-}
-
-.replay {
-    padding: 1em;
-}
-
-.modal-replay-btn {
-    display: block;
-    background-color: #8c4ed6;
-    color: white;
-    font-size: 16px;
-    font-weight: normal;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 8px;
-    margin: auto;
-    -webkit-box-shadow: 7px 7px 30px #999999;
-    box-shadow: 7px 7px 30px #999999;
-    -webkit-transition: -webkit-box-shadow 0.5s;
-    -moz-transition: -webkit-box-shadow 0.5s;
-    -o-transition: -webkit-box-shadow 0.5s;
-    transition: -webkit-box-shadow 0.5s;
-    -o-transition: box-shadow 0.5s;
-    transition: box-shadow 0.5s, -webkit-box-shadow 0.5s;
-}
-
-.modal-replay-btn:hover, .modal-replay-btn:focus {
-    -webkit-box-shadow: 3px 3px 8px #6F6F6F;
-    box-shadow: 3px 3px 8px #6F6F6F;
-    background-color: #9759E3;
-    cursor: pointer;
-}
 .restart {
     cursor: pointer;
 }

@@ -58,8 +58,6 @@ newGame();
 //Initialise
 
 function newGame() {
-
-    
 	closeModal();
 	// Clear openedCards array
     openedCards = [];
@@ -88,7 +86,6 @@ function newGame() {
 }
 
 function openCard(event) {
-
     startTimer();
 
     var target = event.target;
@@ -132,7 +129,7 @@ function incrementMove() {
 	if (moves === 15) {
         stars[2].style.display = "none";
 		starCount = 2; 
-    } else if (moves === 30) {
+    } else if (moves === 23) {
         stars[1].style.display = "none";
 		starCount = 1; 
     }
@@ -212,7 +209,7 @@ function openModal() {
     modalSeconds.textContent = `${sec} seconds`;
     modalMoves.textContent = `${moves} moves`;
 	modalRating.textContent = starCount;
-    modal.style.display = 'block';
+	$("#simpleModal").modal("show");
 }
 
 function closeModal() {
