@@ -132,12 +132,9 @@ function incrementMove() {
 	if (moves === 15) {
         stars[2].style.display = "none";
 		starCount = 2; 
-    } else if (moves === 27) {
+    } else if (moves === 30) {
         stars[1].style.display = "none";
 		starCount = 1; 
-    } else if (moves === 35) {
-        stars[0].style.display = "none";
-		starCount = 0; 
     }
 }
 
